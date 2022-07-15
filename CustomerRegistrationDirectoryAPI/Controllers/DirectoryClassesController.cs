@@ -4,6 +4,7 @@ using CustomerRegistrationDirectoryAPI.Application.Features.Commands.DirectoryCl
 using CustomerRegistrationDirectoryAPI.Application.Features.Queries.DirectoryClass.GetAllDirectoryClass;
 using CustomerRegistrationDirectoryAPI.Application.Features.Queries.DirectoryClass.GetByIdDirectoryClass;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace CustomerRegistrationDirectoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class DirectoryClassesController : ControllerBase
     {
         IMediator _mediatr;

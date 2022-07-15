@@ -10,6 +10,7 @@ using CustomerRegistrationDirectoryAPI.Application.Repositories.CustomerReposito
 using CustomerRegistrationDirectoryAPI.Application.Repositories.DirectoryRepository;
 using CustomerRegistrationDirectoryAPI.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace CustomerRegistrationDirectoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class CustomersController : ControllerBase
     {
         IMediator _mediator;

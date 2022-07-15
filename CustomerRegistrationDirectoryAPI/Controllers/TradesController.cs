@@ -4,6 +4,7 @@ using CustomerRegistrationDirectoryAPI.Application.Features.Commands.Trade.Uploa
 using CustomerRegistrationDirectoryAPI.Application.Features.Queries.Trade.GetAllTrade;
 using CustomerRegistrationDirectoryAPI.Application.Features.Queries.Trade.GetByIdTrade;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace CustomerRegistrationDirectoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class TradesController : ControllerBase
     {
         IMediator _mediatr;
