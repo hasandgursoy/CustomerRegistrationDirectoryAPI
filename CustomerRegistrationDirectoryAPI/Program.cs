@@ -1,3 +1,4 @@
+using CustomerRegistrationDirectoryAPI.Application.Mapping;
 using CustomerRegistrationDirectoryAPI.Application.ServiceRegistration;
 using CustomerRegistrationDirectoryAPI.Infrastructure;
 using CustomerRegistrationDirectoryAPI.Infrastructure.Storage.Local;

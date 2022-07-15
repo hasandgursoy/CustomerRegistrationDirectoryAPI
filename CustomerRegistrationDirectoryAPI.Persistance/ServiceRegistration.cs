@@ -3,6 +3,7 @@ using CustomerRegistrationDirectoryAPI.Application.Repositories.CustomerReposito
 using CustomerRegistrationDirectoryAPI.Application.Repositories.DirectoryRepository;
 using CustomerRegistrationDirectoryAPI.Application.Repositories.FileRepository;
 using CustomerRegistrationDirectoryAPI.Application.Repositories.TradeRepository;
+using CustomerRegistrationDirectoryAPI.Domain.Entities.Identity;
 using CustomerRegistrationDirectoryAPI.Persistance.Context;
 using CustomerRegistrationDirectoryAPI.Persistance.Repositories.CustomerImageFileRepository;
 using CustomerRegistrationDirectoryAPI.Persistance.Repositories.CustomerRepository;
@@ -29,6 +30,15 @@ namespace CustomerRegistrationDirectoryAPI.Persistance
 
             services.AddDbContext<CustomerRegistrationDirectoryAPIDbContext>(
                 options => options.UseNpgsql(_configuration.GetConnectionString("PostgreSQL")));
+            services.AddIdentity<AppUser, AppRole>(options => {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+
+            }
+            ).AddEntityFrameworkStores<CustomerRegistrationDirectoryAPIDbContext>();
             services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<ITradeReadRepository, TradeReadRepository>();

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CustomerRegistrationDirectoryAPI.Application.Mapping;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace CustomerRegistrationDirectoryAPI.Application.ServiceRegistration
         public static void AddApplicationServices(this IServiceCollection services)
         {
             services.AddMediatR(typeof(ServiceRegistration));
+            services.AddAutoMapper(typeof(MapProfile));
+            
         }
 
     }

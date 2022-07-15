@@ -1,5 +1,7 @@
 ﻿using CustomerRegistrationDirectoryAPI.Domain.Entities;
 using CustomerRegistrationDirectoryAPI.Domain.Entities.Common;
+using CustomerRegistrationDirectoryAPI.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CustomerRegistrationDirectoryAPI.Persistance.Context
 {
-    public class CustomerRegistrationDirectoryAPIDbContext : DbContext
+    public class CustomerRegistrationDirectoryAPIDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public CustomerRegistrationDirectoryAPIDbContext(DbContextOptions options) : base(options)
         {
@@ -19,6 +21,10 @@ namespace CustomerRegistrationDirectoryAPI.Persistance.Context
         public DbSet<Customer> Customers { get; set; }
         public DbSet<DirectoryClass> Directories { get; set; }
         public DbSet<Trade> Trades { get; set; }
+
+
+        public DbSet<Domain.Entities.File> Files { get; set; }
+        public DbSet<CustomerImageFile> CustomerImagefiles { get; set; }
 
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

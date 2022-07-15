@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomerRegistrationDirectoryAPI.Application.Abstraction.Token
 {
-    public class ITokenHandler 
+    public interface ITokenHandler 
     {
         DTOs.Token CreateAccessToken(int minute);
 
