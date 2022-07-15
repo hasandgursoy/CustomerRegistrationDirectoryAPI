@@ -1,6 +1,15 @@
-﻿using CustomerRegistrationDirectoryAPI.Application.Repositories.CustomerRepository;
+﻿using CustomerRegistrationDirectoryAPI.Application.Features.Commands.Customer.CreateCustomer;
+using CustomerRegistrationDirectoryAPI.Application.Features.Commands.Customer.RemoveCustomer;
+using CustomerRegistrationDirectoryAPI.Application.Features.Commands.Customer.UpdateCustomer;
+using CustomerRegistrationDirectoryAPI.Application.Features.Commands.CustomerImageFile.RemoveCustomerImage;
+using CustomerRegistrationDirectoryAPI.Application.Features.Commands.CustomerImageFile.UploadCustomerImage;
+using CustomerRegistrationDirectoryAPI.Application.Features.Queries.Customer.GetAllCustomer;
+using CustomerRegistrationDirectoryAPI.Application.Features.Queries.Customer.GetByIdCustomer;
+using CustomerRegistrationDirectoryAPI.Application.Features.Queries.CustomerImageFile.GetCustomerImage;
+using CustomerRegistrationDirectoryAPI.Application.Repositories.CustomerRepository;
 using CustomerRegistrationDirectoryAPI.Application.Repositories.DirectoryRepository;
 using CustomerRegistrationDirectoryAPI.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,37 +20,73 @@ namespace CustomerRegistrationDirectoryAPI.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
+        IMediator _mediator;
 
-        readonly ICustomerReadRepository _customerReadRepository;
-        readonly ICustomerWriteRepository _customerWriteRepository;
-        readonly IDirectoryClassWriteRepository _directoryWriteRepository;
-        public CustomersController(ICustomerReadRepository customerReadRepository, ICustomerWriteRepository customerWriteRepository, IDirectoryClassWriteRepository directoryWriteRepository)
+        public CustomersController(IMediator mediator)
         {
-            _customerReadRepository = customerReadRepository;
-            _customerWriteRepository = customerWriteRepository;
-            _directoryWriteRepository = directoryWriteRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll(GetAllCustomerQueryRequest request)
         {
-           var datas =  _customerReadRepository.GetAll();
-
-            return Ok(datas);
+            GetAllCustomerQueryResponse response = await _mediator.Send(request);
+            return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Upload( )
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> Get([FromRoute] GetByIdCustomerQueryRequest request)
         {
-            
+            GetByIdCustomerQueryResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpPut]
+
+        public async Task<IActionResult> Put([FromBody] UpdateCustomerCommandRequest request)
+        {
+            await _mediator.Send(request);
+            return Ok();
+        }
+
+
+        [HttpDelete("{Id}")]
+
+        public async Task<IActionResult> Delete([FromRoute] RemoveCustomerCommandRequest request)
+        {
+            await _mediator.Send(request);
+            return Ok();
+        }
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] CreateCustomerCommandRequest request )
+        {
+            await _mediator.Send(request);
             return Ok();
         }
 
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> DirectoryPost()
+        public async Task<IActionResult> ImageUpload([FromBody] UploadCustomerImageFileCommandRequest request)
         {
-            
+            await _mediator.Send(request);
+            return Ok();
+        }
+
+        [HttpGet("[action]/{Id}")]
+        public async Task<IActionResult> GetCustomerImages([FromRoute] GetCustomerImageQueryRequest request)
+        {
+            List<GetCustomerImageQueryResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpDelete("[action]/{Id}")]
+        public async Task<IActionResult> DeleteCustomerImage([FromRoute] RemoveCustomerImageFileCommandRequest request)
+        {
+            await _mediator.Send(request);
             return Ok();
         }
 

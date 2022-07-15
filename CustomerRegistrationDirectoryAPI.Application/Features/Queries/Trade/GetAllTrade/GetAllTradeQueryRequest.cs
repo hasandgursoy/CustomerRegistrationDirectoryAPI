@@ -9,5 +9,6 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Queries.Trade.Ge
 {
     public class GetAllTradeQueryRequest : IRequest<GetAllTradeQueryResponse>
     {
+       
     }
 }

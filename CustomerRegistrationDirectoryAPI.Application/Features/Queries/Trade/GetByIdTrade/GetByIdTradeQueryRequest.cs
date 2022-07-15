@@ -9,5 +9,7 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Queries.Trade.Ge
 {
     public class GetByIdTradeQueryRequest : IRequest<GetByIdTradeQueryResponse>
     {
+        public string Id { get; set; }
+
     }
 }

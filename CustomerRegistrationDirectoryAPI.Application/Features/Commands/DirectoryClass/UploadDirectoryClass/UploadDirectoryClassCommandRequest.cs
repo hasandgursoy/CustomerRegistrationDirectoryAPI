@@ -9,5 +9,8 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Commands.Directo
 {
     public class UploadDirectoryClassCommandRequest : IRequest<UploadDirectoryClassCommandResponse>
     {
+        public string Id { get; set; }
+        public string Name { get; set; }
+
     }
 }

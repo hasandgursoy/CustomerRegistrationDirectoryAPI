@@ -2,5 +2,7 @@
 {
     public class GetAllTradeQueryResponse
     {
+        public int TotalCount { get; set; }
+        public object Trades { get; set; }
     }
 }

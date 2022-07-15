@@ -9,5 +9,7 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Queries.Customer
 {
     public class GetByIdCustomerQueryRequest : IRequest<GetByIdCustomerQueryResponse>
     {
+        public string Id { get; set; }
+
     }
 }

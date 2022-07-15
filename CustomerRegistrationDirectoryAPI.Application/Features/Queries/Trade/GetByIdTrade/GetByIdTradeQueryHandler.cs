@@ -1,4 +1,5 @@
-﻿using CustomerRegistrationDirectoryAPI.Application.Repositories.TradeRepository;
+﻿using AutoMapper;
+using CustomerRegistrationDirectoryAPI.Application.Repositories.TradeRepository;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,20 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Queries.Trade.Ge
     public class GetByIdTradeQueryHandler : IRequestHandler<GetByIdTradeQueryRequest, GetByIdTradeQueryResponse>
     {
         readonly ITradeReadRepository _tradeReadRepository;
+        readonly IMapper _mapper;
 
-        public GetByIdTradeQueryHandler(ITradeReadRepository tradeReadRepository)
+
+
+        public GetByIdTradeQueryHandler(ITradeReadRepository tradeReadRepository, IMapper mapper)
         {
             _tradeReadRepository = tradeReadRepository;
+            _mapper = mapper;
         }
 
-        public Task<GetByIdTradeQueryResponse> Handle(GetByIdTradeQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetByIdTradeQueryResponse> Handle(GetByIdTradeQueryRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Domain.Entities.Trade trade = await _tradeReadRepository.GetByIdAsync(request.Id);
+            return _mapper.Map<GetByIdTradeQueryResponse>(trade);
         }
     }
 }

@@ -9,5 +9,8 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Commands.Trade.R
 {
     public class RemoveTradeCommandRequest : IRequest<RemoveTradeCommandResponse>
     {
+        public string Id { get; set; }
+
+        
     }
 }

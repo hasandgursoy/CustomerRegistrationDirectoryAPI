@@ -11,15 +11,22 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Commands.Directo
     public class RemoveDirectoryClassCommandHandler : IRequestHandler<RemoveDirectoryClassCommandRequest, RemoveDirectoryClassCommandResponse>
     {
         readonly IDirectoryClassWriteRepository _directoryClassWriteRepository;
-
-        public RemoveDirectoryClassCommandHandler(IDirectoryClassWriteRepository directoryClassWriteRepository)
+        readonly IDirectoryClassReadRepository _directoryClassReadRepository;
+        public RemoveDirectoryClassCommandHandler(IDirectoryClassWriteRepository directoryClassWriteRepository, IDirectoryClassReadRepository directoryClassReadRepository)
         {
             _directoryClassWriteRepository = directoryClassWriteRepository;
+            _directoryClassReadRepository = directoryClassReadRepository;
         }
 
-        public Task<RemoveDirectoryClassCommandResponse> Handle(RemoveDirectoryClassCommandRequest request, CancellationToken cancellationToken)
+        public async Task<RemoveDirectoryClassCommandResponse> Handle(RemoveDirectoryClassCommandRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Domain.Entities.DirectoryClass directory = await _directoryClassReadRepository.GetByIdAsync(request.Id);
+            if (directory !=null)
+            {
+                _directoryClassWriteRepository.Remove(directory);
+            }
+
+            return new();
         }
     }
 }

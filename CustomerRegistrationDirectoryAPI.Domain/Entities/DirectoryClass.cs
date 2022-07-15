@@ -9,6 +9,7 @@ namespace CustomerRegistrationDirectoryAPI.Domain.Entities
 {
     public class DirectoryClass: BaseEntity
     {
+        public string Name { get; set; }
         public ICollection<Customer> Customer { get; set; }
 
 

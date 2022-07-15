@@ -17,9 +17,25 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Queries.Director
             _directoryClassReadRepository = directoryClassReadRepository;
         }
 
-        public Task<GetAllDirectoryClassQueryResponse> Handle(GetAllDirectoryClassQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllDirectoryClassQueryResponse> Handle(GetAllDirectoryClassQueryRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var totalCount = _directoryClassReadRepository.GetAll(false).Count();
+            var directorys = _directoryClassReadRepository.GetAll(false).Select(p => new
+            {
+                p.Name,
+                p.Id,
+                p.Customer,
+                
+            }).ToList();
+
+            return new()
+            {
+                TotalCount = totalCount,
+                Directories = directorys
+            };
+
         }
+
+
     }
 }

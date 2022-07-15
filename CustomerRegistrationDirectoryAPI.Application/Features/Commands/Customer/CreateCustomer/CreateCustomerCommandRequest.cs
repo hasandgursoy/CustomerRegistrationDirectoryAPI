@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CustomerRegistrationDirectoryAPI.Application.Features.Commands.Customer.CreateCustomer
 {
-    public class CreateCustomerCommandRequest : BaseEntity, IRequest<CreateCustomerCommandResponse>
+    public class CreateCustomerCommandRequest : IRequest<CreateCustomerCommandResponse>
     {
         public string Name { get; set; }
         public string Surname { get; set; }

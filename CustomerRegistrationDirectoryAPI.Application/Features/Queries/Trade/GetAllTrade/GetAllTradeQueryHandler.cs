@@ -17,9 +17,25 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Queries.Trade.Ge
             _tradeReadRepository = tradeReadRepository;
         }
 
-        public Task<GetAllTradeQueryResponse> Handle(GetAllTradeQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllTradeQueryResponse> Handle(GetAllTradeQueryRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var totalCount = _tradeReadRepository.GetAll(false).Count();
+            var trades = _tradeReadRepository.GetAll(false).Select( p => new
+            {
+                p.Id,
+                p.Customer,
+                p.Description,
+                p.CustomerId,
+                p.TradeVolume,
+                
+            }).ToList();
+
+            return new()
+            {
+                TotalCount = totalCount,
+                Trades = trades
+            };
+        
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CustomerRegistrationDirectoryAPI.Application.Repositories.TradeRepository;
+﻿using AutoMapper;
+using CustomerRegistrationDirectoryAPI.Application.Repositories.TradeRepository;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,22 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Commands.Trade.C
     public class CreateTradeCommandHandler : IRequestHandler<CreateTradeCommandRequest, CreateTradeCommandResponse>
     {
         readonly ITradeWriteRepository _tradeWriteRepository;
-
-        public CreateTradeCommandHandler(ITradeWriteRepository tradeWriteRepository)
+        readonly IMapper _mapper;
+        public CreateTradeCommandHandler(ITradeWriteRepository tradeWriteRepository, IMapper mapper)
         {
             _tradeWriteRepository = tradeWriteRepository;
+            _mapper = mapper;
         }
 
-        public Task<CreateTradeCommandResponse> Handle(CreateTradeCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateTradeCommandResponse> Handle(CreateTradeCommandRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _tradeWriteRepository.AddAsync(_mapper.Map<Domain.Entities.Trade>(request));
+            await _tradeWriteRepository.SaveAsync();
+            return new();
+
         }
+
+
+
     }
 }

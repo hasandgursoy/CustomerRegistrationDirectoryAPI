@@ -12,15 +12,20 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Commands.Trade.R
     {
 
         readonly ITradeWriteRepository _tradeWriteRepository;
+        readonly ITradeReadRepository _tradeReadRepository;
 
-        public RemoveTradeCommandHandler(ITradeWriteRepository tradeWriteRepository)
+        public RemoveTradeCommandHandler(ITradeWriteRepository tradeWriteRepository, ITradeReadRepository tradeReadRepository)
         {
             _tradeWriteRepository = tradeWriteRepository;
+            _tradeReadRepository = tradeReadRepository;
         }
 
-        public Task<RemoveTradeCommandResponse> Handle(RemoveTradeCommandRequest request, CancellationToken cancellationToken)
+        public async Task<RemoveTradeCommandResponse> Handle(RemoveTradeCommandRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Domain.Entities.Trade trade = await _tradeReadRepository.GetByIdAsync(request.Id);
+            _tradeWriteRepository.Remove(trade);
+            await _tradeWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

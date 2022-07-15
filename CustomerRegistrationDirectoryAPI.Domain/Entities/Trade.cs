@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CustomerRegistrationDirectoryAPI.Domain.Entities
 {
     public class Trade : BaseEntity
-    {
+    {   
         public  Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
         public string Description { get; set; }

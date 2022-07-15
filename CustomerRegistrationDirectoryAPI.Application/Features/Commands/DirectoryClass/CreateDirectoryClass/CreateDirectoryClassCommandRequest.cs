@@ -9,5 +9,6 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Commands.Directo
 {
     public class CreateDirectoryClassCommandRequest : IRequest<CreateDirectoryClassCommandResponse>
     {
+        public string Name { get; set; }
     }
 }

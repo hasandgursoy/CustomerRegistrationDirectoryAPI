@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace CustomerRegistrationDirectoryAPI.Application.Features.Queries.CustomerImageFile.GetCustomerImage
 {
-    public class GetCustomerImageQueryRequest : IRequest<GetCustomerImageQueryResponse>
+    public class GetCustomerImageQueryRequest : IRequest<List<GetCustomerImageQueryResponse>>
     {
+        public string Id { get; set; }
     }
 }

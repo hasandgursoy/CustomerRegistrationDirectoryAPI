@@ -9,5 +9,7 @@ namespace CustomerRegistrationDirectoryAPI.Application.Features.Commands.Directo
 {
     public class RemoveDirectoryClassCommandRequest :IRequest<RemoveDirectoryClassCommandResponse>
     {
+        public String Id { get; set; }
+
     }
 }

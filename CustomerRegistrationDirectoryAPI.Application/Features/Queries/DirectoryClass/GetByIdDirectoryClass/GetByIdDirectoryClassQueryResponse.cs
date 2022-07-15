@@ -2,5 +2,8 @@
 {
     public class GetByIdDirectoryClassQueryResponse
     {
+        public string Name { get; set; }
+        
+
     }
 }
