@@ -1,10 +1,16 @@
+using CustomerRegistrationDirectoryAPI.Application.ServiceRegistration;
+using CustomerRegistrationDirectoryAPI.Infrastructure;
+using CustomerRegistrationDirectoryAPI.Infrastructure.Storage.Local;
 using CustomerRegistrationDirectoryAPI.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddPersistanceServices(builder.Configuration);
+builder.Services.AddInfrastructureServices();
+builder.Services.AddApplicationServices();
 
+builder.Services.AddStorage<LocalStorage>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -19,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

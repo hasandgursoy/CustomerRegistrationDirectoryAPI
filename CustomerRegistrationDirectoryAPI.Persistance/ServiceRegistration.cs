@@ -1,4 +1,14 @@
-﻿using CustomerRegistrationDirectoryAPI.Persistance.Context;
+﻿using CustomerRegistrationDirectoryAPI.Application.Repositories.CustomerImageFileRepository;
+using CustomerRegistrationDirectoryAPI.Application.Repositories.CustomerRepository;
+using CustomerRegistrationDirectoryAPI.Application.Repositories.DirectoryRepository;
+using CustomerRegistrationDirectoryAPI.Application.Repositories.FileRepository;
+using CustomerRegistrationDirectoryAPI.Application.Repositories.TradeRepository;
+using CustomerRegistrationDirectoryAPI.Persistance.Context;
+using CustomerRegistrationDirectoryAPI.Persistance.Repositories.CustomerImageFileRepository;
+using CustomerRegistrationDirectoryAPI.Persistance.Repositories.CustomerRepository;
+using CustomerRegistrationDirectoryAPI.Persistance.Repositories.DirectoryRepository;
+using CustomerRegistrationDirectoryAPI.Persistance.Repositories.FileRepository;
+using CustomerRegistrationDirectoryAPI.Persistance.Repositories.TradeRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,9 +28,21 @@ namespace CustomerRegistrationDirectoryAPI.Persistance
         {
 
             services.AddDbContext<CustomerRegistrationDirectoryAPIDbContext>(
-                options => options.UseNpgsql(_configuration.GetConnectionString("PostgreSQL"))
-                );
+                options => options.UseNpgsql(_configuration.GetConnectionString("PostgreSQL")));
+            services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
+            services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
+            services.AddScoped<ITradeReadRepository, TradeReadRepository>();
+            services.AddScoped<ITradeWriteRepository, TradeWriteRepository>();
+            services.AddScoped<ICustomerImageFileReadRepository, CustomerImageFileReadRepository>();
+            services.AddScoped<ICustomerImageFileWriteRepository, CustomerImageFileWriteRepository>();
+            services.AddScoped<IDirectoryClassReadRepository, DirectoryClassReadRepository>();
+            services.AddScoped<IDirectoryClassWriteRepository, DirectoryClassWriteRepository>();
+            services.AddScoped<IFileReadRepository, FileReadRepository>();
+            services.AddScoped<IFileWriteRepository, FileWriteRepository>();
+
         }
+
+
 
     }
 }
